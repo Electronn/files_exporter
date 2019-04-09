@@ -117,11 +117,11 @@ func probehandler (w http.ResponseWriter, r *http.Request) {
     http.Error(w, "Target parameter is missing", http.StatusBadRequest)
     return
   }
-  if params.Get("file") == "" {  http.Error(w, "file param is missing", http.StatusBadRequest) }
+  if params.Get("target") == "" {  http.Error(w, "file param is missing", http.StatusBadRequest) }
 //  if params.Get("regexp") == "" { http.Error(w, "regexp param is missing", http.StatusBadRequest) }
   if regexp == "" { http.Error(w, "regexp param is missing", http.StatusBadRequest) }
-  fmt.Fprintf(w, "file_match_regex: " + MatchStringFile(params.Get("file"), regexp) + "\n")
-  fmt.Fprintf(w, "file_md5: " + MD5SumFile(params.Get("file")))
+  fmt.Fprintf(w, "file_match_regex: " + MatchStringFile(params.Get("target"), regexp) + "\n")
+  fmt.Fprintf(w, "file_md5: " + MD5SumFile(params.Get("target")))
   fmt.Println(params.Get("token"))
 }
 
