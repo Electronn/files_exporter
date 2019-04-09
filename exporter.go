@@ -121,7 +121,40 @@ func probehandler (w http.ResponseWriter, r *http.Request) {
 //  if params.Get("regexp") == "" { http.Error(w, "regexp param is missing", http.StatusBadRequest) }
   if regexp == "" { http.Error(w, "regexp param is missing", http.StatusBadRequest) }
   fmt.Fprintf(w, "file_match_regex: " + MatchStringFile(params.Get("target"), regexp) + "\n")
-  fmt.Fprintf(w, "file_md5: " + MD5SumFile(params.Get("target")))
+  fmt.Fprintf(w, "file_md5: " + md5tofloat(MD5SumFile(params.Get("target"))))
   fmt.Println(params.Get("token"))
+}
+
+func hex2decfast(input string) (float64) {
+  var output float64
+  if input == "a" { output = 10 }
+  if input == "b" { output = 11 }
+  if input == "c" { output = 12 }
+  if input == "d" { output = 13 }
+  if input == "e" { output = 14 }
+  if input == "f" { output = 15 }
+  if input == "0" { output = 0 }
+  if input == "1" { output = 1 }
+  if input == "2" { output = 2 }
+  if input == "3" { output = 3 }
+  if input == "4" { output = 4 }
+  if input == "5" { output = 5 }
+  if input == "6" { output = 6 }
+  if input == "7" { output = 7 }
+  if input == "8" { output = 8 }
+  if input == "9" { output = 9 }
+  return output
+}
+
+func md5tofloat64(md5hex string) (float64) {
+  var md5arr []string
+  var total float64
+  md5len := 32 - 1 // correct pos in array
+  for i, r := range md5hex {
+    md5arr = append(md5arr, fmt.Sprintf("%c", r))
+    subtotal := md5len - i
+    total += hex2decfast(fmt.Sprintf("%c", r)) * math.Pow(float64(16), float64(subtotal))
+  }
+  return total
 }
 
