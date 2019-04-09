@@ -11,6 +11,7 @@ import (
   "time"
   "strings"
   "regexp"
+  "math"
 //  "io/ioutil"
   "encoding/hex"
   "crypto/md5"
@@ -121,7 +122,7 @@ func probehandler (w http.ResponseWriter, r *http.Request) {
 //  if params.Get("regexp") == "" { http.Error(w, "regexp param is missing", http.StatusBadRequest) }
   if regexp == "" { http.Error(w, "regexp param is missing", http.StatusBadRequest) }
   fmt.Fprintf(w, "file_match_regex: " + MatchStringFile(params.Get("target"), regexp) + "\n")
-  fmt.Fprintf(w, "file_md5: " + md5tofloat(MD5SumFile(params.Get("target"))))
+  fmt.Fprintf(w, "file_md5: " + fmt.Sprintf("%f", md5tofloat64(MD5SumFile(params.Get("target")))))
   fmt.Println(params.Get("token"))
 }
 
